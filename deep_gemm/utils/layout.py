@@ -10,11 +10,19 @@ except ImportError:
     pass
 
 # Valid for all CUDA versions
-from .._C import (
-    set_mk_alignment_for_contiguous_layout,
-    get_mk_alignment_for_contiguous_layout,
-    get_theoretical_mk_alignment_for_contiguous_layout,
-)
+try:
+    from .._C import (
+        set_mk_alignment_for_contiguous_layout,
+        get_mk_alignment_for_contiguous_layout,
+        get_theoretical_mk_alignment_for_contiguous_layout,
+    )
+except ImportError:
+    def set_mk_alignment_for_contiguous_layout(*args, **kwargs):
+        raise RuntimeError("DeepGEMM C++ extension is not available")
+    def get_mk_alignment_for_contiguous_layout(*args, **kwargs):
+        raise RuntimeError("DeepGEMM C++ extension is not available")
+    def get_theoretical_mk_alignment_for_contiguous_layout(*args, **kwargs):
+        raise RuntimeError("DeepGEMM C++ extension is not available")
 
 # Some alias
 get_m_alignment_for_contiguous_layout = get_mk_alignment_for_contiguous_layout
