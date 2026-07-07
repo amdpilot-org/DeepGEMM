@@ -131,6 +131,7 @@ def main():
 
     aiter_geomean = geometric_mean(aiter_tflops_list)
     print(f"aiter_tflops_geomean: {aiter_geomean:.2f}")
+    print(f"aiter_geomean: {aiter_geomean:.2f}")
     print()
     ratio = geomean / aiter_geomean if aiter_geomean > 0 else 0.0
     print(f"speedup_vs_aiter: {ratio:.3f}x")
