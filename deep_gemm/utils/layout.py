@@ -10,11 +10,20 @@ except ImportError:
     pass
 
 # Valid for all CUDA versions
-from .._C import (
-    set_mk_alignment_for_contiguous_layout,
-    get_mk_alignment_for_contiguous_layout,
-    get_theoretical_mk_alignment_for_contiguous_layout,
-)
+try:
+    from .._C import (
+        set_mk_alignment_for_contiguous_layout,
+        get_mk_alignment_for_contiguous_layout,
+        get_theoretical_mk_alignment_for_contiguous_layout,
+    )
+except ImportError:
+    # AMD/ROCm backend: no _C extension, provide stubs
+    def set_mk_alignment_for_contiguous_layout(x):
+        pass
+    def get_mk_alignment_for_contiguous_layout():
+        return 1
+    def get_theoretical_mk_alignment_for_contiguous_layout():
+        return 1
 
 # Some alias
 get_m_alignment_for_contiguous_layout = get_mk_alignment_for_contiguous_layout
